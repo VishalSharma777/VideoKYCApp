@@ -1,0 +1,22 @@
+name: Slack Webhook Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  slack-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send test message to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "text": "🎉 Slack CI/CD Test Successful!\nRepository: `${{ github.repository }}`\nTriggered by push to `main`"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
